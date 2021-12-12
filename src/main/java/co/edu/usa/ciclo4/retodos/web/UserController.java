@@ -29,45 +29,91 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 @CrossOrigin("*")
 public class UserController {
+
+    /**
+     * Instancia de la clase de servicio
+     */
     @Autowired
     private UserService userService;
-    
+
+    /**
+     * Método para obtener una lista de usuarios
+     *
+     * @return Lista de usuarios
+     */
     @GetMapping("/all")
-    public List<User>getAll(){
+    public List<User> getAll() {
         return userService.getAll();
     }
-    
+
+    /**
+     * Método para obtener un usuario por id
+     *
+     * @param id: identificador del usuario en la colección
+     * @return usuario por id
+     */
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable("id")int id){
+    public Optional<User> getUser(@PathVariable("id") int id) {
         return userService.getUser(id);
     }
-            
+
+    /**
+     * Método para crear un nuevo usuario
+     *
+     * @param user: atributos del usuario
+     * @return un nuevo usuario con los valores de los atributos dados
+     */
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody User user){
+    public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
-    
+
+    /**
+     * Método para actualizar un usuario
+     *
+     * @param user: atributos actualizados del usuario
+     * @return un usuario con sus atributos actualizados
+     */
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public User updateUser(@RequestBody User user){
-     return userService.updateUser(user);
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
     }
-    
+
+    /**
+     * Método para borrar un usuario por id
+     *
+     * @param id: id del usuario que se desea eliminar de la colección
+     * @return eliminación del usuario
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id")int id){
+    public boolean delete(@PathVariable("id") int id) {
         return userService.delete(id);
     }
-    
+
+    /**
+     * Método para validar si un correo ya existe registrado en la colección
+     *
+     * @param email: correo que quiere validarse
+     * @return un booleano dependiendo si existe o no el correo
+     */
     @GetMapping("/emailexist/{email}")
-    public boolean emailExists(@PathVariable("email")String email){
+    public boolean emailExists(@PathVariable("email") String email) {
         return userService.emailExist(email);
     }
-    
-  @GetMapping("/{email}/{password}")
-public User autenticarUser(@PathVariable("email")String email, @PathVariable("password")String password){
-    return userService.autenticarUsuario(email, password);
-}  
-    
+
+    /**
+     * Método para validar si una combinación correo y contraseña existen
+     *
+     * @param email:correo que quiere validarse
+     * @param password: contraseña que quiere validarse
+     * @return un booleano dependiendo si existe o no la combinación dada
+     */
+    @GetMapping("/{email}/{password}")
+    public User autenticarUser(@PathVariable("email") String email, @PathVariable("password") String password) {
+        return userService.autenticarUsuario(email, password);
+    }
+
 }
